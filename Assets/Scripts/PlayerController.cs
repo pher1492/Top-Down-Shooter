@@ -18,21 +18,43 @@ public class PlayerController : MonoBehaviour {
 	// Components
 	private CharacterController controller;
 	private Camera cam;
-	public Gun gun;
+	public Gun[] guns;
+	private Gun currentGun;
+	public Transform handHold;
 
 	void Start () {
 		controller = GetComponent<CharacterController>();
 		cam = Camera.main;
+
+		EquipGun (0);
 	}
 
 	void Update () {
 		ControlMouse();
 
-		if (Input.GetButtonDown ("Shoot")) {
-			gun.Shoot ();
-		} else if (Input.GetButton ("Shoot")) {
-			gun.ShootContinous ();
+		if (currentGun) {
+			if (Input.GetButtonDown ("Shoot")) {
+				currentGun.Shoot ();
+			} else if (Input.GetButton ("Shoot")) {
+				currentGun.ShootContinous ();
+			}
 		}
+
+		for (int i = 0; i < guns.Length; i++) {
+			if (Input.GetKeyDown((i + 1) + "")) {
+				EquipGun (i);
+				break;
+			}
+		}
+	}
+
+	void EquipGun(int i) {
+		if (currentGun) {
+			Destroy (currentGun.gameObject);
+		}
+
+		currentGun = Instantiate (guns [i], handHold.position, handHold.rotation) as Gun;
+		currentGun.transform.parent = handHold;
 	}
 
 	void ControlMouse () {

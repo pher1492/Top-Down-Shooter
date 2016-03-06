@@ -16,7 +16,7 @@ GameObject:
   - 65: {fileID: 6546312}
   - 114: {fileID: 11476836}
   m_Layer: 9
-  m_Name: Shell
+  m_Name: AK Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
