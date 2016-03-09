@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour {
 	public enum GunType {Semi, Burst, Auto}
 	public GunType gunType;
 	public float rpm;
+	public float baseShotDistance;
+	public float damage;
 
 	// System
 	private float secondsBetweenShots;
@@ -20,6 +22,7 @@ public class Gun : MonoBehaviour {
 	private AudioSource gunSound;
 	private LineRenderer tracer;
 	public Rigidbody shell;
+	public LayerMask collisionMask;
 
 	void Start () {
 		gunSound = GetComponent<AudioSource>();
@@ -39,9 +42,13 @@ public class Gun : MonoBehaviour {
 			Ray ray = new Ray (shotSpawn.position, shotSpawn.forward);
 			RaycastHit hit;
 
-			float shotDistance = 20;
-			if (Physics.Raycast (ray, out hit, shotDistance)) {
+			float shotDistance = baseShotDistance;
+			if (Physics.Raycast (ray, out hit, shotDistance, collisionMask)) {
 				shotDistance = hit.distance;
+
+				if (hit.collider.GetComponent<Entity> ()) {
+					hit.collider.GetComponent<Entity>().TakeDamage(damage);
+				}
 			}
 
 			nextPossibleShootTime = Time.time + secondsBetweenShots;
