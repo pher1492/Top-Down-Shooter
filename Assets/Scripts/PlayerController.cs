@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (CharacterController))]
+[RequireComponent (typeof (NavMeshAgent))]
 
 public class PlayerController : MonoBehaviour {
 	
@@ -16,14 +16,14 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 currentVelocityMod;
 
 	// Components
-	private CharacterController controller;
+	private NavMeshAgent agent;
 	private Camera cam;
 	public Gun[] guns;
 	private Gun currentGun;
 	public Transform handHold;
 
 	void Start () {
-		controller = GetComponent<CharacterController>();
+		agent = GetComponent<NavMeshAgent>();
 		cam = Camera.main;
 
 		EquipGun (0);
@@ -70,6 +70,6 @@ public class PlayerController : MonoBehaviour {
 		motion *= (Mathf.Abs (input.x) == 1 && Mathf.Abs (input.z) == 1) ? .7f : 1;
 		motion *= (Input.GetButton ("Run")) ? runSpeed : walkSpeed;
 		motion += Vector3.up * -8; // Gravity
-		controller.Move(motion * Time.deltaTime);
+		agent.Move(motion * Time.deltaTime);
 	}
 }
