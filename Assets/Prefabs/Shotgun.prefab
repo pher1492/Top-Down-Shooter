@@ -208,9 +208,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunType: 0
   rpm: 60
+  baseShotDistance: 5
+  damage: 25
   shotSpawn: {fileID: 448512}
   shellEjectionPoint: {fileID: 468418}
   shell: {fileID: 5486854, guid: 1d4a5d35c77cecc4aa3702eb42a72e62, type: 2}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 1280
 --- !u!120 &12014680
 LineRenderer:
   m_ObjectHideFlags: 1
